@@ -1,6 +1,6 @@
 # pipeline_devops_Karla
 Buenos días, para mi prueba creé tres pipelines en diferentes archivos. 
-- El primer pipeline ejecuta un script en Node.js cada vez que se hace un push al repositorio.
+- El primer pipeline ejecuta un script en Node.js que imprime: **'Hola mundo'** cada vez que se hace un push al repositorio.
 - El segundo pipeline valida automáticamente los conflictos.
 - El tercer piepeline elimina la rama temporal automáticamente despues del merge.
 
