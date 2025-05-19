@@ -1,0 +1,13 @@
+{
+  "name": "pipeline-node-devops",
+  "version": "1.0.0",
+  "description": "Script para prueba DevOps",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
+  }
+}
+
