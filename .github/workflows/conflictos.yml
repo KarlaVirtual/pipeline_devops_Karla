@@ -2,38 +2,46 @@ name: Verificar conflictos y borrar rama
 
 on:
   push:
-    branches:
-      - '**'     # Se ejecuta con cualquier push a cualquier rama, excepto main
+    branches-ignore:
+      - main   # Solo se ejecuta cuando se hace push a cualquier rama que NO sea main
 
 jobs:
   merge-check:
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
 
     steps:
-      - name: posicionarse en la rams main
+      - name: Definir nombre de la rama actual
+        run: echo "SOURCE_BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+
+      - name: Clonar el repositorio con historial completo
         uses: actions/checkout@v3
         with:
-          ref: main
+          fetch-depth: 0  # Necesario para poder hacer merge con otras ramas
 
-      - name: actualizar repositorio con todas las ramas
+      - name: Obtener todas las ramas
         run: git fetch --all
 
-      - name: intentar hacer merge con la rama actual
+      - name: Posicionarse en main y crear rama temporal
         run: |
+          git checkout main
           git checkout -b test-merge
-          git merge origin/${{ github.head_ref }} --no-commit --no-ff
 
-      - name: borra la rama si no hay conflictps
+      - name: Intentar hacer merge con la rama actual
+        run: |
+          echo "Intentando hacer merge con $SOURCE_BRANCH"
+          git merge origin/${SOURCE_BRANCH} --no-commit --no-ff
+
+      - name: Borrar la rama si no hay conflictos
         if: success()
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
+          echo "No hay conflictos. Eliminando la rama ${SOURCE_BRANCH}"
           curl -X DELETE -H "Authorization: token $GH_PAT" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${{ github.head_ref }}
-            
+            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${SOURCE_BRANCH}
+
       - name: Falla en caso de conflictos
         if: failure()
         run: |
-          echo "conflictos detectados ${{ github.head_ref }} al hacer merge con main ."
+          echo "❌ Conflictos detectados al hacer merge de '${SOURCE_BRANCH}' con 'main'"
           exit 1
