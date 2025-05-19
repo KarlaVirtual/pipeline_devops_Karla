@@ -2,23 +2,25 @@ name: Verificar conflictos y borrar rama
 
 on:
   pull_request:
+    types: [opened, synchronize, closed]
     branches:
-      - main  # Solo se ejecuta si el PR va dirigido a 'main'
+      - main
 
 jobs:
   merge-check:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Definir nombre de la rama actual
+      - name: Definir nombre de la rama del PR
         run: echo "SOURCE_BRANCH=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
 
       - name: Clonar el repositorio con historial completo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Necesario para poder hacer merge con otras ramas
+          fetch-depth: 0
 
-      - name: Obtener todas las ramas
+      - name: Obtener todas las ramas remotas
         run: git fetch --all
 
       - name: Posicionarse en main y crear rama temporal
@@ -26,22 +28,32 @@ jobs:
           git checkout main
           git checkout -b test-merge
 
+      - name: Configurar identidad de Git
+        run: |
+          git config user.email "karla.ramirez@virtualsoft.tech"
+          git config user.name "KarlaVirtual"
+
       - name: Intentar hacer merge con la rama del PR
         run: |
           echo "Intentando hacer merge con $SOURCE_BRANCH"
           git merge origin/${SOURCE_BRANCH} --no-commit --no-ff
 
-      - name: Borrar la rama si no hay conflictos
-        if: success()
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          echo "No hay conflictos. Eliminando la rama ${SOURCE_BRANCH}"
-          curl -X DELETE -H "Authorization: token $GH_PAT" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${SOURCE_BRANCH}
-
       - name: Falla en caso de conflictos
         if: failure()
         run: |
-          echo "❌ Conflictos detectados al hacer merge de '${SOURCE_BRANCH}' con 'main'"
+          echo "Conflictos detectados al hacer merge de '${SOURCE_BRANCH}' con 'main'"
           exit 1
+
+  delete-merged-branch:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Borrar rama remota si el PR fue mergeado
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          echo "PR fue mergeado. Eliminando la rama ${SOURCE_BRANCH}"
+          curl -X DELETE -H "Authorization: token $GH_PAT" \
+            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${SOURCE_BRANCH}
