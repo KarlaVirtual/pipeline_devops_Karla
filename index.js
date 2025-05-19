@@ -12,6 +12,6 @@ const countdownInterval = setInterval(() => {
   } else {
     clearInterval(countdownInterval);
     console.clear(); // Limpia la consola
-    console.log(chalk.red('Mensaje eliminado. Fin del script.'));
+    console.log(chalk.red('Adiós Moni y Dani.'));
   }
 }, 1000);
