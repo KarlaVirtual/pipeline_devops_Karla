@@ -1,7 +1,7 @@
 {
   "name": "pipeline-node-devops",
   "version": "1.0.0",
-  "description": "Script para la prueba técnica de DevOps",
+  "description": "Script para ejecutar el hola mundo y mi conteo regresivo jeje",
   "main": "index.js",
   "type": "module",
   "scripts": {
