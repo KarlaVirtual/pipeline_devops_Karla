@@ -1,14 +1,11 @@
-name: Verificar conflictos y borrar rama
+name: Verificar conflictos al hacer push
 
 on:
   pull_request:
-    types: [opened, synchronize, closed]
-    branches:
-      - main
+    types: [opened, synchronize]
 
 jobs:
   merge-check:
-    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
 
     steps:
@@ -43,28 +40,3 @@ jobs:
         run: |
           echo "Conflictos detectados al hacer merge de '${SOURCE_BRANCH}' con 'main'"
           exit 1
-
-  delete-merged-branch:
-    if: github.event.action == 'closed'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Verificar si el PR fue mergeado
-        id: check_merge
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          PR_API_URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
-          MERGED=$(curl -s -H "Authorization: token $GH_TOKEN" $PR_API_URL | jq -r '.merged')
-          echo "Merged: $MERGED"
-          echo "merged=$MERGED" >> $GITHUB_OUTPUT
-
-      - name: Eliminar rama si fue mergeado
-        if: steps.check_merge.outputs.merged == 'true'
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
-        run: |
-          echo "PR fue mergeado. Eliminando la rama remota: ${SOURCE_BRANCH}"
-          curl -X DELETE -H "Authorization: token $GH_PAT" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${SOURCE_BRANCH}
