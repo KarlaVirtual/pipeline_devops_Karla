@@ -4,7 +4,14 @@ Buenos días, para mi prueba creé tres pipelines en diferentes archivos.
 - El segundo pipeline valida automáticamente los conflictos.
 - El tercer piepeline elimina la rama de desarrollo automáticamente despues del merge.
 
-Para probar los workflows, primero, se hace un cambio en la rama 'Prueba', se hace una modificación en cualquier archivo (se puede crear un archivo nuevo), despues de hacer el cambio, hacer commit, luego hacer un PR a la rama main, después de crear el PR se debe hacer el merge del PR.
+## Para probar los workflows:
+- Primero: Se hace un cambio en la rama 'Prueba', se hace una modificación en cualquier archivo (se puede crear un archivo nuevo).
+- Después de hacer el cambio, hacer commit.
+- Luego hacer un PR a la rama main.
+- Después de crear el PR se debe hacer el merge del PR.
+
+- ## Comportamiento esperado:
+  Se debe mostrar el mensaje "Hola mundo", después debe verificar que no hayan conflictos en la rama y por último debe eliminar la rama origen del desarrollo.
 
 
 
