@@ -1,11 +1,14 @@
 {
   "name": "pipeline-node-devops",
   "version": "1.0.0",
-  "description": "Script para prueba DevOps",
+  "description": "Script para la prueba técnica de DevOps",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "chalk": "^5.3.0"
   }
