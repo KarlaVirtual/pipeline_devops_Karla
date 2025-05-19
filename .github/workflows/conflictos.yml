@@ -1,0 +1,39 @@
+name: Verificar conflictos y borrar rama
+
+on:
+  push:
+    branches:
+      - '**'     # Se ejecuta con cualquier push a cualquier rama, excepto main
+
+jobs:
+  merge-check:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+
+    steps:
+      - name: posicionarse en la rams main
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: actualizar repositorio con todas las ramas
+        run: git fetch --all
+
+      - name: intentar hacer merge con la rama actual
+        run: |
+          git checkout -b test-merge
+          git merge origin/${{ github.head_ref }} --no-commit --no-ff
+
+      - name: borra la rama si no hay conflictps
+        if: success()
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          curl -X DELETE -H "Authorization: token $GH_PAT" \
+            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${{ github.head_ref }}
+            
+      - name: Falla en caso de conflictos
+        if: failure()
+        run: |
+          echo "conflictos detectados ${{ github.head_ref }} al hacer merge con main ."
+          exit 1
