@@ -1,0 +1,20 @@
+name: Eliminar rama luego de merge
+
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  delete-merged-branch:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Eliminar rama si fue mergeado
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          echo "PR fue mergeado. Eliminando la rama remota: ${SOURCE_BRANCH}"
+          curl -X DELETE -H "Authorization: token $GH_PAT" \
+            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${SOURCE_BRANCH}
