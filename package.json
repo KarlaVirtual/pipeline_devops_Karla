@@ -1,16 +1,28 @@
+
 {
-  "name": "pipeline-node-devops",
-  "version": "1.0.0",
-  "description": "Script para ejecutar el hola mundo y mi conteo regresivo jeje",
-  "main": "index.js",
-  "type": "module",
+  "name": "V-image",
+  "version": "3.4.0",
+  "description": "Version Backend",
+  "main": "",
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VirtualsoftSS/backend"
+  },
+  "author": "Karla Ramirez",
+  "license": "UNLICENSED",
   "dependencies": {
-    "chalk": "^5.3.0"
+    "axios": "^1.5.0"
+  },
+  "devDependencies": {
+    "semantic-release": "^24.2.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^11.0.2",
+    "@semantic-release/github": "^9.0.4",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/release-notes-generator": "^12.1.0"
   }
 }
-
