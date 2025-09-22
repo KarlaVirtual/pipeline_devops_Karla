@@ -1,0 +1,36 @@
+on: #Activa el flujo de trabajo
+
+  push: #Determina que el flujo de trabajo se va a activar solo cuando se haga push
+    branches: 
+      - 'main' #Indica que solo va a activarse con la rama main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest #sistema en que se va a ejecutar el workflow (este es el recomendado)
+
+    permissions: #Permisos para que el workfolw realice las funciones necesarias.
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - name: Check out repository #Analiza el repositorio
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js #Activa la herramienta node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21' #la versión con la que se va a trabajar
+
+
+      - name: Install dependencies #instala las dependencias de npm necesarias para el proceso
+        run: |
+          npm install
+
+      - name: Run semantic-release #Corre las dependencias del paquete de npm
+        run: |
+          npx semantic-release
+        env: #envía los tokens 
+          GITHUB_TOKEN: ${{ secrets.VERSION_TOKEN}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN}}
