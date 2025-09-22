@@ -19,7 +19,3 @@ const countdownInterval = setInterval(() => {
 
 
 
-
-
-
-
