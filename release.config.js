@@ -1,24 +1,8 @@
 const config = {
   branches: ['main'],
   plugins: [
-    [
-      '@semantic-release/commit-analyzer',
-      {
-        parserOpts: {
-          headerPattern: /^(\w+):"(.*)"$/,
-          headerCorrespondence: ['type', 'subject']
-        }
-      }
-    ],
-    [
-      '@semantic-release/release-notes-generator',
-      {
-        parserOpts: {
-          headerPattern: /^(\w+):"(.*)"$/,
-          headerCorrespondence: ['type', 'subject']
-        }
-      }
-    ],
+    '@semantic-release/commit-analyzer',
+    '@semantic-release/release-notes-generator',
     [
       '@semantic-release/changelog',
       {
@@ -36,6 +20,7 @@ const config = {
     ],
     '@semantic-release/github'
   ]
-}
+};
 
-module.exports = config
+module.exports = config;
+
