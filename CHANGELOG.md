@@ -1,5 +1,17 @@
 # Changelog
 
+# [1.4.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.3.1...v1.4.0) (2025-09-25)
+
+
+### Bug Fixes
+
+* prueba_versionamientoBrayan ([bb6b495](https://github.com/KarlaVirtual/pipeline_devops_Karla/commit/bb6b495a7e854f82713b5771b5ba541c091f345c))
+
+
+### Features
+
+* prueba_versionamientoBrayan ([062f7c1](https://github.com/KarlaVirtual/pipeline_devops_Karla/commit/062f7c1258c862fc777c0c58cef7c0c390bd4938))
+
 ## [1.3.1](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.3.0...v1.3.1) (2025-09-25)
 
 
