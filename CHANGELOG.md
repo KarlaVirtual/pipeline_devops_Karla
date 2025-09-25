@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.3.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.2.1...v1.3.0) (2025-09-25)
+
+
+### Features
+
+* "prueba_versionamiento10" ([4d448f2](https://github.com/KarlaVirtual/pipeline_devops_Karla/commit/4d448f27600e72df722b66392d81b1e753cb38de))
+
 ## [1.2.1](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.2.0...v1.2.1) (2025-09-25)
 
 
