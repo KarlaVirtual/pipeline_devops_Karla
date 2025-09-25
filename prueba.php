@@ -1,2 +1,2 @@
 <?php
-echo 'a ver'  
+echo 'a ver' ;
