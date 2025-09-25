@@ -1,24 +1,34 @@
-module.exports = {
+const config = {
   branches: ['main'],
-  tagFormat: 'v${version}',
   plugins: [
-    '@semantic-release/commit-analyzer',
+    [
+      '@semantic-release/commit-analyzer',
+      {
+        parserOpts: {
+          // Permite tipos como "fix:" o "feat:" seguidos de comillas opcionales
+          headerPattern: /^(\w+):"?(.+)"?$/,
+          headerCorrespondence: ['type', 'subject'],
+        },
+      },
+    ],
     '@semantic-release/release-notes-generator',
     [
       '@semantic-release/changelog',
       {
         changelogFile: 'CHANGELOG.md',
-        changelogTitle: '# Changelog'
-      }
+        changelogTitle: '# Changelog',
+      },
     ],
     [
       '@semantic-release/git',
       {
         assets: ['package.json', 'CHANGELOG.md'],
         message:
-          'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
-      }
+          'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+      },
     ],
-    '@semantic-release/github'
-  ]
+    '@semantic-release/github',
+  ],
 };
+
+module.exports = config;
