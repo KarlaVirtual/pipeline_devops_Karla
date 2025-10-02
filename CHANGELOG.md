@@ -1,5 +1,16 @@
 # Changelog
 
+# [1.12.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.11.0...v1.12.0) (2025-10-02)
+
+
+### Bug Fixes
+
+* pruebaHoli (6f8961b86b832958585433a9a6e8ffeca0e7ce1e)
+
+### Features
+
+* pruebaTotal (199aae333e6677eadb3141bc264b24dd7cbde764)* pruebaV (08df69118fedf225115d5e63b6f21d7e1d374fba)
+
 # [1.11.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.10.0...v1.11.0) (2025-10-02)
 
 
