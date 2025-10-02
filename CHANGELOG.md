@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.9.0 (2025-10-02)
+
 # [1.8.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.7.0...v1.8.0) (2025-09-25)
 
 # [1.7.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.6.1...v1.7.0) (2025-09-25)
