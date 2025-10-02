@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.11.0](https://github.com/KarlaVirtual/pipeline_devops_Karla/compare/v1.10.0...v1.11.0) (2025-10-02)
+
+
+### Features
+
+* pruebaVariosCommitsKarlaRC (57a385319185cbd9ff1146d7944310b03095d98f)
+
 ## 1.10.0 (2025-10-02)
 
 ## 1.9.0 (2025-10-02)
