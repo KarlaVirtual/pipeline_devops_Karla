@@ -4,4 +4,3 @@ echo 'hola mundo hermoso';
 echo 'te amo Ari';
 echo 'Karla GPT hermosa';
 // comentario prueba
-// aquí
