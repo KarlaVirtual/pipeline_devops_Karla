@@ -5,7 +5,8 @@ const config = {
       '@semantic-release/commit-analyzer',
       {
         parserOpts: {
-          headerPattern: /^(\w+):"?(.+)"?$/,
+          // Permite comillas opcionales en el mensaje del commit
+          headerPattern: /^(\w+):"?(.+?)"?$/,
           headerCorrespondence: ['type', 'subject'],
         },
       },
@@ -13,10 +14,17 @@ const config = {
     [
       '@semantic-release/release-notes-generator',
       {
+        parserOpts: {
+          headerPattern: /^(\w+):"?(.+?)"?$/,
+          headerCorrespondence: ['type', 'subject'],
+        },
         writerOpts: {
-          commitsSort: ['type', 'subject'],
-          headerPartial: `## {{version}} ({{date}})\n`,
-          commitPartial: `* {{subject}} ({{hash}})\n`, // 👈 sin link
+          // Personalización del formato en el CHANGELOG
+          commitPartial: '* {{subject}} ({{hash}})',
+          groupBy: 'type',
+          commitGroupsSort: 'title',
+          commitsSort: ['scope', 'subject'],
+          noteGroupsSort: 'title',
         },
       },
     ],
