@@ -9,12 +9,19 @@ jobs:
   update-fluid-stable:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write   # 🔹 Le da permiso al workflow para hacer push
+      # opcionalmente puedes agregar:
+      # actions: read
+      # id-token: write
+
     steps:
-      # Clonar el repositorio completo
+      # Clonar el repositorio completo con permisos
       - name: Checkout del repositorio
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Necesario para manipular ramas y hacer push
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}   # 🔹 Aquí pasas el token
 
       # Configurar tu identidad como autor
       - name: Configurar usuario de Git
@@ -24,6 +31,8 @@ jobs:
 
       # Crear o resetear la rama estable
       - name: Actualizar rama fluid-stable
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}   # 🔹 Exportar token al entorno
         run: |
           git fetch origin fluid-stable || true
           git checkout enviromentdev
@@ -31,5 +40,5 @@ jobs:
           git rm -rf .
           git checkout enviromentdev -- .
           git add .
-          git commit -m "Actualización estable para análisis Fluid" --author="Karla Ramirez <tu-correo@dominio.com>" || echo "Sin cambios detectados"
-          git push origin fluid-stable --force
+          git commit -m "Actualización estable para análisis Fluid" --author="Karla Ramirez <karla.ramirez@virtulsoft.tech>" || echo "Sin cambios detectados"
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:fluid-stable --force
