@@ -1,0 +1,35 @@
+name: Actualizar rama estable para Fluid
+
+on:
+  push:
+    branches:
+      - enviromentdev   # Se ejecuta cuando haces push a esta rama
+
+jobs:
+  update-fluid-stable:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clonar el repositorio completo
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Necesario para manipular ramas y hacer push
+
+      # Configurar tu identidad como autor
+      - name: Configurar usuario de Git
+        run: |
+          git config user.name "KarlaVirtual"
+          git config user.email "karla.ramirez@virtulsoft.tech"
+
+      # Crear o resetear la rama estable
+      - name: Actualizar rama fluid-stable
+        run: |
+          git fetch origin fluid-stable || true
+          git checkout enviromentdev
+          git checkout -B fluid-stable
+          git rm -rf .
+          git checkout enviromentdev -- .
+          git add .
+          git commit -m "Actualización estable para análisis Fluid" --author="Karla Ramirez <tu-correo@dominio.com>" || echo "Sin cambios detectados"
+          git push origin fluid-stable --force
