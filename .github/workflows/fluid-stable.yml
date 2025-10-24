@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GH_TOKEN_2 }}   # 🔹 Aquí pasas el token
+          token: ${{ secrets.GH_TOKEN }}   # 🔹 Aquí pasas el token
 
       # Configurar tu identidad como autor
       - name: Configurar usuario de Git
@@ -32,7 +32,7 @@ jobs:
       # Crear o resetear la rama estable
       - name: Actualizar rama fluid-stable
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_2 }}   # 🔹 Exportar token al entorno
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}   # 🔹 Exportar token al entorno
         run: |
           git fetch origin fluid-stable || true
           git checkout enviromentdev
